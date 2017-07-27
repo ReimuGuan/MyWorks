@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        *{
+            margin:0;
+            padding:0;
+            list-style:none;
+        }
+        #clock{
+            width:800px;
+            height:800px;
+            position:relative;
+            border:3px solid #000000;
+            border-radius:400px;;
+        }
+        #clock ul{
+            width:800px;
+            height:800px;
+        }
+        #clock ul li{
+            position:absolute;
+            left:397px;
+            top:0;
+            width:5px;
+            height:15px;
+            background:#000000;
+            -webkit-transform-origin: center 400px;
+        }
+    </style>
+</head>
+<body>
+    <div id="clock">
+        <ul>
+            <li></li>
+        </ul>
+    </div>
+</body>
+</html>
+<script>
+    var point = document.getElementsByTagName('li');
+    var ul=document.getElementsByTagName('ul')[0];
+    var clock =document.getElementById('clock');
+    for (var i=0;i<60;i++)
+    {
+        var pointer =document.createElement('li');
+        pointer.style.webkitTransform='rotate('+6*i+'deg)';
+        if (i%5==0)
+        {
+            pointer.style.width=10+'px';
+            pointer.style.height=25+'px';
+        }
+        ul.appendChild(pointer);
+    }
+    var center=document.createElement('div');
+    center.style.width=30+'px';
+    center.style.height=30+'px';
+    center.style.background='#000000';
+    center.style.position='absolute';
+    center.style.top=385 + 'px';
+    center.style.left=385+'px';
+    center.style.borderRadius=20+'px';
+    clock.appendChild(center);
+    var hour=document.createElement('div');
+    hour.style.height=200+'px';
+    hour.style.width=30+'px';
+    hour.style.background='#000000';
+    hour.style.position='absolute';
+    hour.style.top=200+ 'px';
+    hour.style.left=385+'px';
+    hour.style.webkitTransformOrigin='center bottom';
+    clock.appendChild(hour);
+    var minute=document.createElement('div');
+    minute.style.height=280+'px';
+    minute.style.width=20+'px';
+    minute.style.background='#000000';
+    minute.style.position='absolute';
+    minute.style.top=120+ 'px';
+    minute.style.left=390+'px';
+    minute.style.webkitTransformOrigin='center bottom';
+    clock.appendChild(minute);
+    var second=document.createElement('div');
+    second.style.height=350+'px';
+    second.style.width=10+'px';
+    second.style.background='#000000';
+    second.style.position='absolute';
+    second.style.top=50+ 'px';
+    second.style.left=395+'px';
+    second.style.webkitTransformOrigin='center bottom';
+    clock.appendChild(second);
+    setInterval(function(){
+        var date=new Date;
+        var hourNow = date.getHours();
+        var minuteNow =date.getMinutes();
+        var secondNow = date.getSeconds();
+        second.style.webkitTransform='rotate('+6*secondNow+'deg)';
+        minute.style.webkitTransform='rotate('+6*minuteNow+'deg)';
+        hour.style.webkitTransform='rotate('+30*(hourNow+minuteNow/60)+'deg)';
+    },1000);
+
+</script>
