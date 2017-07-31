@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        *{
+            margin:0;
+            padding:0;
+            list-style:none;
+        }
+        #nav{
+            position:fixed;
+            bottom:50px;
+            right:50px;
+        }
+        #home{
+            width:50px;
+            height:50px;
+            border-radius: 50%;
+            transition:1s;
+            position:absolute;
+            top:0;
+            left:0;
+        }
+        #content{
+            width:50px;
+            height:50px;
+            position:absolute;
+            top:0;
+            left:0;
+        }
+        #content div{
+            width:50px;
+            height:50px;
+            border-radius: 50%;
+            position:absolute;
+            top:0;
+            left:0;
+        }
+    </style>
+</head>
+<body>
+    <div id="nav">
+        <div id="content">
+            <div class="menu" style="background:url(clos.png) no-repeat"></div>
+            <div class="menu" style="background:url(full.png) no-repeat"></div>
+            <div class="menu" style="background:url(open.png) no-repeat"></div>
+            <div class="menu" style="background:url(prev.png) no-repeat"></div>
+            <div class="menu" style="background:url(refresh.png) no-repeat"></div>
+        </div>
+        <div id="home" style="background:url(home.png)"></div>
+    </div>
+</body>
+</html>
+<script>
+    var home =document.getElementById('home');
+    var flag=true;
+    var menu = document.getElementsByClassName('menu');
+    home.onclick=function(){
+        if (flag==true)
+        {
+            home.style.webkitTransform='rotate(-360deg)';
+            for(var i = 0;i<menu.length;i++)
+            {
+                var angle=22.5*i*Math.PI/180;
+                menu[i].style.left=-1*Math.sin(angle)*150+'px';
+                menu[i].style.top=-1*Math.cos(angle)*150+'px';
+                menu[i].style.transition='0.5s '+i*0.2+'s';
+                menu[i].style.webkitTransform='rotate(-360deg) scale(1)';
+                menu[i].onclick=function(){
+                    this.style.webkitTransform='rotate(-360deg) scale(1.5)';
+                    this.style.opacity='0.3';
+                    this.style.transition=0.3+'s';
+                    this.addEventListener('webkitTransitionEnd',action)
+                };
+
+            }
+            flag =false;
+        }
+        else{
+            flag=true;
+            home.style.webkitTransform='rotate(360deg)';
+            for (var i=0;i<menu.length;i++)
+            {
+                menu[i].style.left=0;
+                menu[i].style.top=0;
+                menu[i].style.transition='0.5s '+i*0.2+'s';
+                menu[i].style.webkitTransform='rotate(360deg) scale(1)';
+            }
+        }
+    };
+    function action(){
+        this.style.webkitTransform='rotate(-360deg) scale(1)';
+        this.style.opacity='1';
+        this.style.transition='0.5s '+this.index*0.2+'s';
+        this.removeEventListener('webkitTransitionEnd',action);
+    }
+</script>
